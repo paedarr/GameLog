@@ -2,12 +2,16 @@
 
 @layer components {
   .little_card {
-    @apply rounded-lg 
+    @apply 
+    rounded-lg 
     bg-blue-500 
-    p-4 
-    w-25
     shadow-md 
+    flex-auto 
+    m-1 
+    w-1/12 
+    h-50
     transition 
-    hover:shadow-lg;
+    hover:shadow-lg
+    hover:cursor-pointer;
   }
 }
