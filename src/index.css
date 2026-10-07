@@ -14,4 +14,18 @@
     hover:shadow-lg
     hover:cursor-pointer;
   }
+
+  .big_card{
+    @apply 
+    rounded-lg 
+    bg-blue-500 
+    shadow-md 
+    flex-auto 
+    m-1 
+    w-1/3 
+    h-80
+    transition 
+    hover:shadow-lg
+    hover:cursor-pointer;
+  }
 }
