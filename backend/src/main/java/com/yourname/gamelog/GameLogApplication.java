@@ -1,13 +1,13 @@
-package com.yourname.letterbloxd;
+package com.yourname.gamelog;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class LetterbloxdApplication {
+public class GameLogApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LetterbloxdApplication.class, args);
+		SpringApplication.run(GameLogApplication.class, args);
 	}
 
 }

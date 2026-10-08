@@ -1,10 +1,10 @@
-package com.yourname.letterbloxd;
+package com.yourname.gamelog;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class LetterbloxdApplicationTests {
+class GameLogApplicationTests {
 
 	@Test
 	void contextLoads() {
