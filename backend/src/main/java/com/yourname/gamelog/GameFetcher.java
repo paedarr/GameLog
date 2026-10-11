@@ -1,11 +1,32 @@
 package com.yourname.gamelog;
 
+import java.time.Instant;
+
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.MediaType;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClient;
+
+
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.http.MediaType;
+
+@Configuration
+class WebConfig implements WebMvcConfigurer {
+
+    @Value("${app.cors.allowed-origin}")
+    private String allowedOrigin;
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins(allowedOrigin)
+                .allowedMethods("GET", "POST", "PUT", "DELETE");
+    }
+}
 
 @RestController
 @RequestMapping("/games")
@@ -25,12 +46,18 @@ public class GameFetcher {
 
     @GetMapping
     public String getGames() {
+
+        long now = Instant.now().getEpochSecond();
+
         return igdb.post()
-                .uri("/games")
+                .uri("/release_dates")
                 .header("Client-ID", clientId)
                 .header("Authorization", "Bearer " + accessToken)
                 .contentType(MediaType.TEXT_PLAIN)
-                .body("fields name, first_release_date; limit 10;")
+                .body("fields game.name, game.cover.image_id, human; "
+                    + "where date != null & date <= " + now + "; "
+                    + "sort date desc; "
+                    + "limit 10;")
                 .retrieve()
                 .body(String.class);
     }

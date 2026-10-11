@@ -31,7 +31,7 @@ then run the program
 ./mvnw spring-boot:run
 ```
 
-finally, we can call our method 
+finally, we can call our method (in a separate terminal window)
 
 ```
 curl http://localhost:8080/games
