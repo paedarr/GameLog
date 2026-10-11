@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import GamePage from './GamePage.jsx'
+import { Routes, Route } from "react-router-dom";
 
 function App() {
 
@@ -33,7 +35,7 @@ const cover_url = (imageId, size = "t_cover_big") =>
 
         <div className = "game_card_container_new">
           <div className = "grid_card_align flex bg-emerald-300">
-            <div className = "little_card relative group">
+            <div className = "little_card relative group" onClick = {GamePage}>
               {error && <p>Error loading games: {error}</p>}
 
               <img src = {cover_url(games[0]?.game?.cover?.image_id)} alt = {games[0]?.game?.name} className = "w-full h-full object-cover rounded-lg"/>
@@ -41,7 +43,7 @@ const cover_url = (imageId, size = "t_cover_big") =>
               <p className = "new_game_title absolute bottom-3 left-3 text-xl z-10 text-white opacity-0 transition-opacity group-hover:opacity-100">{games[0]?.game?.name}</p>
 
             </div>
-            <div className = "little_card relative group">
+            <div className = "little_card relative group" onClick={() => console.log('Clicked on game:', games[1]?.game?.name)}>
               {error && <p>Error loading games: {error}</p>}
 
               <img src = {cover_url(games[1]?.game?.cover?.image_id)} alt = {games[1]?.game?.name} className = "w-full h-full object-cover rounded-lg"/>
