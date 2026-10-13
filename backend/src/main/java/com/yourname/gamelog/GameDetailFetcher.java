@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClient;
 
+// THIS PAGE IS BROKEN -> TO DO
+
 @RestController
 @RequestMapping("/game_detail")
 public class GameDetailFetcher {
@@ -26,6 +28,7 @@ public class GameDetailFetcher {
     public String getGames() {
 
         // long now = Instant.now().getEpochSecond();
+        // add more vars here so query can be less cluttered
 
         return igdb.post()
                 .uri("/games")

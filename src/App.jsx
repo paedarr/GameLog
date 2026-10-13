@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import GamePage from './GamePage.jsx'
-import { Routes, Route } from "react-router-dom";
+// import { Routes, Route } from "react-router-dom";
 
 function App() {
 
@@ -31,7 +31,7 @@ const cover_url = (imageId, size = "t_cover_big") =>
       
       <div className = "home_page_container">
 
-        <navbar className = "navbar text-amber-100">this is the navbar</navbar>
+        <navbar className = "navbar text-amber-100">GameLog</navbar>
 
         <div className = "game_card_container_new">
           <div className = "grid_card_align flex bg-emerald-300">
