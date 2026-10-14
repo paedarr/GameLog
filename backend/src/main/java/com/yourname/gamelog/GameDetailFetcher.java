@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClient;
 
@@ -25,17 +26,14 @@ public class GameDetailFetcher {
     }
 
     @GetMapping
-    public String getGames() {
-
-        // long now = Instant.now().getEpochSecond();
-        // add more vars here so query can be less cluttered
-
+    public String getGame(@RequestParam long gameId) {
         return igdb.post()
                 .uri("/games")
                 .header("Client-ID", clientId)
                 .header("Authorization", "Bearer " + accessToken)
                 .contentType(MediaType.TEXT_PLAIN)
-                .body("fields game.name, game.cover.image_id, human; ")
+                .body("fields name, cover.image_id, artworks.image_id, screenshots.image_id, summary, first_release_date, genres.name, platforms.name; "
+                        + "where id = " + gameId + ";")
                 .retrieve()
                 .body(String.class);
     }

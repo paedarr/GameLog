@@ -54,7 +54,7 @@ public class GameFetcher {
                 .header("Client-ID", clientId)
                 .header("Authorization", "Bearer " + accessToken)
                 .contentType(MediaType.TEXT_PLAIN)
-                .body("fields game.name, game.cover.image_id, human; "
+                .body("fields game.id, game.name, game.cover.image_id, human; "
                     + "where date != null & date <= " + now + "; "
                     + "sort date desc; "
                     + "limit 10;")
