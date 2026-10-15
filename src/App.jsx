@@ -20,6 +20,28 @@ function App() {
       .catch(error => setError(error.message))
   }, [])
 
+  // <------------------------------------------>
+
+  const [popGames, setPopGames] = useState([])
+  const [popError, setPopError] = useState('')
+  const [selectedPopGame, setSelectedPopGame] = useState(null)
+
+  
+
+  useEffect(() => {
+    fetch('http://localhost:8080/popular')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Request failed: ${response.status}`)
+        }
+        return response.json()
+      })
+      .then(data => setPopGames(data))
+      .catch(error => setPopError(error.message))
+  }, [])
+
+
+// <------------------------------------------>
   
 const cover_url = (imageId, size = "t_cover_big") =>
   imageId
@@ -35,6 +57,15 @@ if (selectedGame) {
   )
 }
 
+if (selectedPopGame) {
+  return (
+    <GamePage
+      game={selectedPopGame}
+      onBack={() => setSelectedPopGame(null)}
+    />
+  )
+}
+
 return (
     <div className="App">
       
@@ -44,20 +75,27 @@ return (
 
         <div className = "game_card_container_popular">
           <div className = "grid_card_align flex bg-emerald-300">
-            <div className = "little_card relative group">
-               <img src = "public/thumbnails/minecraft_minithumb.jpg" alt = "minecraft thumbnail" className = "w-full h-full object-cover rounded-lg"/>
-               <div aria-hidden="true" className = "pointer-events-none absolute inset-0 z-10 rounded-lg bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(0,0,0,0.75)_100%)] opacity-0 transition-opacity group-hover:opacity-100"></div>
-               <p className = "popular_game_title absolute bottom-3 left-3 text-xl z-10 text-white opacity-0 transition-opacity group-hover:opacity-100">Minecraft</p>
-            </div>
-            <div className = "little_card">this is a little card</div>
-            <div className = "little_card">this is a little card</div>
-            <div className = "little_card">this is a little card</div>
-            <div className = "little_card">this is a little card</div>
-            <div className = "little_card">this is a little card</div>
-            <div className = "little_card">this is a little card</div>
-            <div className = "little_card">this is a little card</div>
-            <div className = "little_card">this is a little card</div>
-            <div className = "little_card">this is a little card</div>
+            <div className = "grid_card_align flex bg-emerald-300">
+            {popError && <p>Error loading popular games: {popError}</p>}
+            {popGames.map((release, index) => (
+              <button
+                type="button"
+                className="little_card relative group text-left"
+                key={release.game?.id ?? index}
+                onClick={() => setSelectedPopGame(release.game)}
+              >
+                <img
+                  src={cover_url(release.game?.cover?.image_id)}
+                  alt={release.game?.name ?? 'Game cover'}
+                  className="w-full h-full object-cover rounded-lg"
+                />
+                <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-10 rounded-lg bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(0,0,0,0.75)_100%)] opacity-0 transition-opacity group-hover:opacity-100"></div>
+                <p className="new_game_title absolute bottom-3 left-3 text-xl z-10 text-white opacity-0 transition-opacity group-hover:opacity-100">
+                  {release.game?.name}
+                </p>
+              </button>
+            ))}
+          </div>
           </div>
         </div>
 

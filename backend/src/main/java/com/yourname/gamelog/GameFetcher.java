@@ -61,4 +61,5 @@ public class GameFetcher {
                 .retrieve()
                 .body(String.class);
     }
+
 }
