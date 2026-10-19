@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import GamePage from './GamePage.jsx'
-// import { Routes, Route } from "react-router-dom";
+import Login from './Login.jsx'
+import { Routes, Route, Link } from "react-router-dom";
 
-function App() {
-
+function Home() {
   const [games, setGames] = useState([])
   const [error, setError] = useState('')
   const [selectedGame, setSelectedGame] = useState(null)
@@ -40,7 +40,7 @@ function App() {
   }, [])
 
 
-// <------------------------------------------>
+  // <------------------------------------------>
 
 
   const [featGames, setFeatGames] = useState([])
@@ -61,52 +61,58 @@ function App() {
   }, [])
 
 
-// <------------------------------------------>
-  
-const cover_url = (imageId, size = "t_cover_big") =>
-  imageId
-    ? `https://images.igdb.com/igdb/image/upload/${size}/${imageId}.jpg`
-    : "/placeholder.png";
+  // <------------------------------------------>
 
-if (selectedGame) {
+  const cover_url = (imageId, size = "t_cover_big") =>
+    imageId
+      ? `https://images.igdb.com/igdb/image/upload/${size}/${imageId}.jpg`
+      : "/placeholder.png";
+
+  if (selectedGame) {
+    return (
+      <GamePage
+        game={selectedGame}
+        onBack={() => setSelectedGame(null)}
+      />
+    )
+  }
+
+  if (selectedPopGame) {
+    return (
+      <GamePage
+        game={selectedPopGame}
+        onBack={() => setSelectedPopGame(null)}
+      />
+    )
+  }
+
+  if (selectedFeatGame) {
+    return (
+      <GamePage
+        game={selectedFeatGame}
+        onBack={() => setSelectedFeatGame(null)}
+      />
+    )
+  }
+
   return (
-    <GamePage
-      game={selectedGame}
-      onBack={() => setSelectedGame(null)}
-    />
-  )
-}
-
-if (selectedPopGame) {
-  return (
-    <GamePage
-      game={selectedPopGame}
-      onBack={() => setSelectedPopGame(null)}
-    />
-  )
-}
-
-if (selectedFeatGame) {
-  return (
-    <GamePage
-      game={selectedFeatGame}
-      onBack={() => setSelectedFeatGame(null)}
-    />
-  )
-}
-
-return (
     <div className="App">
-      
-      <div className = "home_page_container">
 
-        <navbar className = "navbar text-amber-100">GameLog</navbar>
+      <div className="home_page_container">
 
-        <div className = "game_card_container_popular mt-3 mb-3">
+        <navbar className="navbar text-amber-100 flex items-end bg-black">
+          <img src="public/GameLog_banner-transparent.png" alt="GameLog Banner" className="banner_logo w-50 cursor-pointer pb-1.5 ml-5.5" />
+          <p className="text-2xl font-bold text-white ml-10">[SEARCH BAR HERE]</p>
+          <div className="right_navbar_elements_container flex items-center ml-auto mr-5">
+            <p className="text-2xl font-bold text-white">[NOTIFICATIONS ICON]</p>
+            <p className="text-2xl font-bold text-white mr-5 cursor-pointer bg-teal-400"><Link to="/login">Sign in</Link></p>
+          </div>
+        </navbar>
 
-          <p position = "relative" className="text-2xl font-bold text-white mb-2">Popular Games</p>
-          <div className = "grid_card_align flex bg-black">
-            <div className = "grid_card_align flex bg-black">
+        <div className="game_card_container_popular mt-3 mb-3 w-full">
+
+          <p position="relative" className="text-2xl font-bold text-white mb-2 ml-5">Popular Games</p>
+          <div className="grid_card_align flex bg-black">
             {popError && <p>Error loading popular games: {popError}</p>}
             {popGames.map((release, index) => (
               <button
@@ -127,14 +133,13 @@ return (
               </button>
             ))}
           </div>
-          </div>
         </div>
 
-        <div className = "game_card_container_featured mb-3">
-          <p position = "relative" className="text-2xl font-bold text-white mb-2">Featured Games</p>
-          <div className = "grid_card_align flex bg-black">
-              {featError && <p>Error loading featured games: {featError}</p>}
-              {featGames.map((game, index) => (
+        <div className="game_card_container_featured mb-3 w-full">
+          <p position="relative" className="text-2xl font-bold text-white mb-2 ml-5">Featured Games</p>
+          <div className="grid_card_align flex bg-black">
+            {featError && <p>Error loading featured games: {featError}</p>}
+            {featGames.map((game, index) => (
               <button
                 type="button"
                 className="big_card relative group text-left"
@@ -155,11 +160,11 @@ return (
           </div>
         </div>
 
-        <div className = "game_card_container_new">
+        <div className="game_card_container_new w-full">
 
-          <p position = "relative" className="text-2xl font-bold text-white mb-2">New Games</p>
+          <p position="relative" className="text-2xl font-bold text-white mb-2 ml-5">New Games</p>
 
-          <div className = "grid_card_align flex bg-black">
+          <div className="grid_card_align flex bg-black">
             {error && <p>Error loading games: {error}</p>}
             {games.map((release, index) => (
               <button
@@ -185,6 +190,15 @@ return (
       </div>
 
     </div>
+  )
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+    </Routes>
   )
 }
 

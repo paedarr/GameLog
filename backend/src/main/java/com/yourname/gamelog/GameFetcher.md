@@ -25,6 +25,12 @@ then
 export IGDB_ACCESS_TOKEN='your-access-token'
 ```
 
+then pass mongo DB url
+
+```
+export MONGODB_URI="mongodb+srv://USERNAME:PASSWORD@cluster0.xxxxx.mongodb.net/users"
+```
+
 then run the program
 
 ```
